@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POI Report Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="rishikesh_nagar_nigam.jpeg" alt="Rishikesh Nagar Nigam Logo" class="logo">
+            <h1>POI Report Analytics Dashboard</h1>
+            <p>Analyze Point of Interest coverage reports</p>
+            <p class="credit">CREATED BY YUVRAJ SINGH TOMAR</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-box">
+                <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                <label for="fileInput" class="upload-label">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Click to upload CSV file</span>
+                    <span class="file-info">or drag and drop</span>
+                </label>
+            </div>
+            <div id="fileName" class="file-name"></div>
+        </div>
+
+        <div id="dashboard" class="dashboard hidden">
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Total Routes</h3>
+                    <div class="card-value" id="totalRoutes">0</div>
+                </div>
+                <div class="card">
+                    <h3>Total POIs</h3>
+                    <div class="card-value" id="totalPOIs">0</div>
+                </div>
+                <div class="card">
+                    <h3>Covered POIs</h3>
+                    <div class="card-value" id="coveredPOIs">0</div>
+                </div>
+                <div class="card">
+                    <h3>Avg Coverage</h3>
+                    <div class="card-value" id="avgCoverage">0%</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="wardFilter">Filter by Ward:</label>
+                    <select id="wardFilter">
+                        <option value="">All Wards</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="vehicleFilter">Filter by Vehicle:</label>
+                    <select id="vehicleFilter">
+                        <option value="">All Vehicles</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="coverageFilter">Min Coverage %:</label>
+                    <input type="range" id="coverageFilter" min="0" max="100" value="0">
+                    <span id="coverageValue">0%</span>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3>Coverage by Ward</h3>
+                    <canvas id="wardChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Coverage Distribution</h3>
+                    <canvas id="coverageDistChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-section">
+                <div class="table-header">
+                    <h3>Detailed Report</h3>
+                    <div class="table-actions">
+                        <input type="text" id="searchInput" placeholder="Search...">
+                        <button id="exportBtn" class="btn-export">Export CSV</button>
+                        <button id="exportImageBtn" class="btn-export">Export as Image</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Ward Name</th>
+                                <th>Vehicle Number</th>
+                                <th>Route Name</th>
+                                <th>Total</th>
+                                <th>Covered</th>
+                                <th>Not Covered</th>
+                                <th>Coverage %</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <h3>Top Performing Routes</h3>
+                    <div id="topRoutes" class="stat-list"></div>
+                </div>
+                <div class="stat-card">
+                    <h3>Routes Needing Attention</h3>
+                    <div id="lowRoutes" class="stat-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
